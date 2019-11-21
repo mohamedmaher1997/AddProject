@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <script name="jquery/jquery.js" library="primefaces" type="script"></script>
+    <title>Products</title>
+</h:head>
+
+<br/>
+<h:form id="Tableform">
+    <p:panel header="Products Record">
+        <p:dataTable editable="true"  id="table" var="product" value="#{productController.productList}">
+            <p:column>
+                <f:facet name="header">#Serial Id</f:facet>
+                <h:outputText value="#{product.productId}" />
+            </p:column>
+            <p:column>
+                <f:facet name="header">Product Name</f:facet>
+                <h:outputText value="#{product.productName}" />
+            </p:column>
+            <p:column>
+                <f:facet name="header">Quantity</f:facet>
+                <h:outputText value="#{product.quantity}">
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Update</f:facet>
+                <p:commandButton outcome="productDetail"  value="Update Product" action="#{productController.setProduct(product)}" update=":uform" oncomplete="PF('updateForm').show();" >
+                    <f:param name="productId"  value="Update Product" />
+                </p:commandButton>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Delete</f:facet>
+                <p:commandButton outcome="productDetail" value="Delete Product" action="#{productController.deleteProduct(product)}" update="Tableform">
+                    <f:param name="productId" value="#{product.productId}" />
+                    <p:ajax execute="@form"></p:ajax>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+</h:form>
+
+<h:panelGrid columns="2" cellpadding="5">
+    <p:commandButton value="Add Product" type="button" onclick="PF('productForm').show();" >
+    </p:commandButton>
+
+</h:panelGrid>
+    <p:dialog header="Product Details" widgetVar="productForm" modal="true" height="60%" id="result" >
+        <h:form id="pform">
+            <p:growl></p:growl>
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Product Name:"></p:outputLabel>
+                <p:inputText value="#{productController.product.productName}" id="productName"></p:inputText>
+                <p:outputLabel value="Quantity"></p:outputLabel>
+                <p:inputText value="#{productController.product.quantity}" id="quantity"></p:inputText>
+            </p:panelGrid>
+            <br/>
+            <p:commandButton value="Add Product" onclick="PF('productForm').hide();" action="#{productController.saveProduct}" update="Tableform,pform" resetValues="true">
+                <p:ajax execute="@form"></p:ajax>
+                <p:resetInput target="pform" />
+            </p:commandButton>
+            &nbsp;&nbsp;
+            <p:commandButton outcome="back" value="Back" action="#{employeeController.loadIndexPage}">
+                <f:param name="backbtn" value="Back" />
+            </p:commandButton>
+        </h:form>
+    </p:dialog>
+
+<p:dialog header="Product Details" showEffect="slide" draggable="false" widgetVar="updateForm" modal="true" height="60%" id="updateform" >
+    <h:form id="uform">
+        <p:growl id="ugrow"></p:growl>
+        <p:panelGrid columns="2" >
+            <p:outputLabel value="Product Name:" >
+                #{productController.product.productName}
+            </p:outputLabel>
+            <p:inputText value="#{productController.product.productName}" id="pName"></p:inputText>
+            <p:outputLabel value="Quantity"></p:outputLabel>
+            <p:inputText value="#{productController.product.quantity}" id="pQuantity"></p:inputText>
+        </p:panelGrid>
+        <br/>
+        <p:commandButton value="#{productController.operation}" onclick="PF('updateForm').hide();" action="#{productController.updateProduct}" update="Tableform">
+            <p:ajax execute="@form" ></p:ajax>
+        </p:commandButton>
+        &nbsp;&nbsp;
+        <p:commandButton outcome="back" value="Back" action="#{employeeController.loadIndexPage}">
+            <f:param name="backbtn" value="Back" />
+        </p:commandButton>
+    </h:form>
+</p:dialog>
+
+</html>

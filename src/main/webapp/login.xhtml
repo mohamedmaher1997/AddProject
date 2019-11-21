@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<f:view xmlns="http://www.w3c.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <title>Login Page</title>
+    </h:head>
+    <h:body>
+        <div>
+            <div>
+                User Authentication Page
+            </div>
+            <h:form>
+                <h:outputLabel for="email" value="Email Address: "/>
+                <h:inputText id="email" value="#{userController.email}"/>
+                <h:outputLabel for="password" value="Password: "/>
+                <h:inputSecret id="password" value="#{userController.password}"></h:inputSecret>
+                <h:commandButton value="Login" action="#{userController.getLoggedIn}"/>
+            </h:form>
+        </div>
+    </h:body>
+</f:view>
+
+</html>

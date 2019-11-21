@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+    <script name="jquery/jquery.js" library="primefaces" type="script"></script>
+    <title>Register Employee</title>
+</h:head>
+<h:form id="productForm">
+    <p:growl id="employee"></p:growl>
+
+    <p:panelGrid columns="2">
+        <p:outputLabel value="Employee Name:"></p:outputLabel>
+        <p:inputText value="#{employeeController.employee.employeeName}"></p:inputText>
+        <p:outputLabel value="Address"></p:outputLabel>
+        <p:inputText value="#{employeeController.employee.address}"></p:inputText>
+        <p:outputLabel value="Phone No:"></p:outputLabel>
+        <p:inputText value="#{employeeController.employee.phoneNo}"></p:inputText>
+    </p:panelGrid>
+    <p:commandButton value="#{employeeController.operation}" action="#{employeeController.saveOrUpdateEmployee}" >
+    </p:commandButton>
+    &nbsp;&nbsp;
+    <p:commandButton outcome="back" value="Back" action="#{employeeController.loadIndexPage}">
+        <f:param name="backbtn" value="Back" />
+    </p:commandButton>
+</h:form>
+<br/>
+<h:form id="form">
+    <p:panel header="Employees Record">
+        <p:dataTable id="table" var="employee" value="#{employeeController.employeeList}">
+            <p:column>
+                <f:facet name="header">#Serial Id</f:facet>
+                <h:outputText value="#{employee.employeeId}" />
+            </p:column>
+            <p:column>
+                <f:facet name="header">Employee Name</f:facet>
+                <h:outputText value="#{employee.employeeName}" />
+            </p:column>
+            <p:column>
+                <f:facet name="header">Address</f:facet>
+                <h:outputText value="#{employee.address}">
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Phone no</f:facet>
+                <h:outputText value="#{employee.phoneNo}">
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Update</f:facet>
+                <h:commandButton outcome="employeeDetail" value="Update Employee" action="#{employeeController.getEmployee(employee)}">
+                    <f:param name="employeeId" value="#{employee.employeeId}" />
+                </h:commandButton>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:commandButton outcome="employeeDetail" value="Delete Employee" action="#{employeeController.deleteEmployee(employee)}">
+                    <f:param name="employeeId" value="#{employee.employeeId}" />
+                </h:commandButton>
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+</h:form>
+</html>

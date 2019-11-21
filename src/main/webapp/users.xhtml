@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+    <script name="jquery/jquery.js" library="primefaces" type="script"></script>
+    <title>Register Users</title>
+</h:head>
+<h:form>
+    <p:growl id="user"></p:growl>
+    <p:panelGrid columns="2">
+        <p:outputLabel value="User Name :"></p:outputLabel>
+        <p:inputText value="#{userController.user.userName}"></p:inputText>
+        <p:outputLabel value="Email Address :"></p:outputLabel>
+        <p:inputText value="#{userController.user.email}"></p:inputText>
+        <p:outputLabel value="Password :"></p:outputLabel>
+        <h:inputSecret value="#{userController.user.password}"></h:inputSecret>
+    </p:panelGrid>
+    <p:commandButton value="#{userController.operation}" action="#{userController.saveOrUpdateUser}" update="user">
+    </p:commandButton>
+    &nbsp;&nbsp;
+    <p:commandButton outcome="back" value="Back" action="#{userController.loadIndexPage}">
+        <f:param name="backbtn" value="Back" />
+    </p:commandButton>
+
+</h:form>
+<br/>
+<h:form id="form">
+    <p:panel header="Users Record">
+        <p:dataTable id="table" var="user" value="#{userController.userList}">
+            <p:column>
+                <f:facet name="header">#Serial Id</f:facet>
+                <h:outputText value="#{user.userId}" />
+            </p:column>
+            <p:column>
+                <f:facet name="header">User Name</f:facet>
+                <h:outputText value="#{user.userName}" />
+            </p:column>
+            <p:column>
+                <f:facet name="header">Email Address</f:facet>
+                <h:outputText value="#{user.email}">
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Password</f:facet>
+                <h:outputText value="#{user.password}">
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Update</f:facet>
+                <h:commandButton outcome="userDetail" value="Update User" action="#{userController.getUser(user)}">
+                    <f:param name="userId" value="#{user.userId}" />
+                </h:commandButton>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:commandButton outcome="userDetail" value="Delete User" action="#{userController.deleteUser(user)}">
+                    <f:param name="userId" value="#{user.userId}" />
+                </h:commandButton>
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+</h:form>
+</html>
